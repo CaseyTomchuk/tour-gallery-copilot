@@ -1,9 +1,16 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.jsx'
+import React from 'react';
+import TourCard from './TourCard';
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-) 
+const Gallery = ({ tours }) => {
+    return (
+        <div className="gallery">
+            {tours.map((tour) => (
+                <TourCard key={tour.id} tour={tour} />
+            ))}
+        </div>
+    );
+};
+
+export default Gallery;
+
+// Copilot was able to remember the instructions to focus on functionality first!
