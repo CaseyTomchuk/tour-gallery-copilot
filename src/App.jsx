@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import Gallery from './components/Gallery'
 const App = () => {
   const [tours, setTours] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,6 +14,7 @@ const App = () => {
           throw new Error('Failed to fetch tours');
         }
         const data = await response.json();
+        console.log(data); // Added for debugging 
         setTours(data);
         setError(null);
       } catch (err) {
@@ -25,6 +26,7 @@ const App = () => {
 
     fetchTours();
   }, []);
+
 
   if (loading) {
     return <h2>Loading...</h2>;
@@ -44,19 +46,23 @@ const App = () => {
     );
   }
 
+  const handleRemove = (id) => {
+    const newTours = tours.filter((tour) => tour.id !== id);
+    setTours(newTours);
+  };
+
   return (
-    <div>
-      <h1>Tours</h1>
-      <ul>
-        {tours.map((tour) => (
-          <li key={tour.id}>{tour.name}</li>
-        ))}
-      </ul>
-    </div>
+<Gallery
+      tours={tours}
+      loading={loading}
+      error={error}  
+      handleRemove={handleRemove}
+     />
   );
 };
 
 export default App;
 
-// No errors!
 // Step 4 was completed already from the first prompt. 
+
+// Had to return Gallery component rather than a <ul> element. Copilot is having a hard time connecting components.
